@@ -1,0 +1,31 @@
+{% extends 'panel/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title-meta %} | افزودن حساب جدید{% endblock %}
+{% block title %} افزودن حساب جدید {% endblock %}
+
+{% block main %}
+<div class="col-md-12">
+    <!-- general form elements -->
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title mb-0 float-left">افزودن حساب جدید</h3>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">{% csrf_token %}
+                    <div class="row">
+                        <div class="col-6">
+                            {{ form.title|as_crispy_field }}
+                        </div>
+                        <div class="col-6">
+                            {{ form.slug|as_crispy_field }}
+                        </div>
+                    <button type="submit" class="btn btn-success">ارسال مقاله</button>
+                    {% if request.resolver_match.kwargs.pk %}
+                        <a href="{% url 'panel:category-create' request.resolver_match.kwargs.pk %}" class="btn btn-danger">حذف</a>
+                    {% endif %}
+                </form>
+            </div>
+        
+</div>
+{% endblock %}

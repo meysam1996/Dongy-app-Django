@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'panel.apps.PanelConfig',
     # New Apps
     'widget_tweaks',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -133,3 +134,7 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# CrispyForms config
+CRISPY_TEMPLATE_PACK = 'bootstrap3'

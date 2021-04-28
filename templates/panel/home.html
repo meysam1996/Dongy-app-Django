@@ -1,6 +1,6 @@
 {% extends 'panel/base.html' %}
 
-{% block title-meta %} | حساب و کتاب{% endblock %}
+{% block title-meta %} | حساب ها {% endblock %}
 {% block title %} حساب ها {% endblock %}
 
 {% block main %}
@@ -10,7 +10,7 @@
               {% for cat in object_list %}
               <div class="mr-3 col-3 small-box bg-success" style="width:auto; height:8rem;">
                 <div class="inner">
-                  <h2>{{ cat.title }}</h2>
+                  <h1 style="font-size:18px;">{{ cat.title }}</h1>
                 </div>
                 <div class="icon">
                   <i class="fas fa-sticky-note"></i>
@@ -20,11 +20,6 @@
             {% else %}
               <h3>محتوایی برای نمایش وجود ندارد!</h3>
             {% endif %}
-            <div id="add-cat-plus" class="mr-3 col-3 text-center small-box bg-success" style="width:auto; height:8rem;">
-              <div class="icon">
-                <i id="icon-plus" class="fa fa-plus"></i>
-              </div>
-            </div>
             <!-- /.card -->
           </div>
         </div>
