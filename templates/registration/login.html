@@ -1,0 +1,92 @@
+{% load static %}
+{% load widget_tweaks %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'registration/login/fonts/icomoon/style.css' %}">
+
+    <link rel="stylesheet" href="{% static 'registration/login/css/owl.carousel.min.css' %}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'registration/login/css/bootstrap.min.css' %}">
+    
+    <!-- Style -->
+    <link rel="stylesheet" href="{% static 'registration/login/css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'registration/login/css/rtl.css' %}">
+
+    <title>Login #7</title>
+  </head>
+  <body>
+  
+
+  
+  <div class="content">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <img src="{% static 'registration/login/images/undraw_remotely_2j6y.svg' %}" alt="Image" class="img-fluid">
+        </div>
+        <div class="col-md-6 contents">
+          <div class="row justify-content-center">
+            <div class="col-md-8">
+              <div class="mb-4">
+              <h3>ورود</h3>
+              <p class="mb-4">به برنامه مای دانگ خوش اومدی.</p>
+            </div>
+            <form method="post">{% csrf_token %}
+              <div class="form-group first">
+                <label for="username">نام کاربری</label>
+                {{form.username|add_class:"form-control"}}
+
+              </div>
+              <div class="form-group last mb-4">
+                <label for="password">پسورد</label>
+                {{form.password|add_class:"form-control"}}                
+              </div>
+              
+              <div class="d-flex mb-5 align-items-center">
+                <label class="control control--checkbox mb-0"><span class="caption">منو یادت باشه</span>
+                  <input type="checkbox" checked="checked"/>
+                  <div class="control__indicator"></div>
+                </label>
+                <span class="mr-auto"><a href="#" class="forgot-pass">فراموشی پسورد</a></span> 
+              </div>
+
+              <input type="submit" value="ورود" class="btn btn-block btn-primary">
+
+              <span class="d-block text-right my-4 text-muted">&mdash; یا ورود با &mdash;</span>
+              
+              <div class="social-login">
+                <a href="#" class="facebook">
+                  <span class="icon-facebook mr-3"></span> 
+                </a>
+                <a href="#" class="twitter">
+                  <span class="icon-twitter mr-3"></span> 
+                </a>
+                <a href="#" class="google">
+                  <span class="icon-google mr-3"></span> 
+                </a>
+              </div>
+            </form>
+            </div>
+          </div>
+          
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  
+    <script src="{% static 'registration/login/js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'registration/login/js/popper.min.js' %}"></script>
+    <script src="{% static 'registration/loginjs/bootstrap.min.js' %}"></script>
+    <script src="{% static 'registration/login/js/main.js' %}"></script>
+  </body>
+</html>

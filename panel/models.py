@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 class Category(models.Model):
     title = models.CharField(max_length=200, verbose_name='عنوان دسته بندی')
     slug = models.SlugField(max_length=100, unique=True, verbose_name='آدرس دسته بندی')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     
     class Meta:
         verbose_name = "دسته بندی"
@@ -16,8 +17,9 @@ class Category(models.Model):
 
 class People(models.Model):
     fullname = models.CharField(max_length=70, verbose_name='نام')
-    username = models.CharField(max_length=100, default=None, null=True, blank=True, verbose_name='نام کاربری')
+    username = models.CharField(max_length=100, unique=True, default=None, null=True, blank=True, verbose_name='نام کاربری')
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     
     class Meta:
         verbose_name = "فرد"
@@ -34,6 +36,7 @@ class Transaction(models.Model):
     amount = models.CharField(max_length=7, verbose_name='مبلغ به تومان')
     payer = models.ForeignKey(People, null=True, on_delete=models.SET_NULL, related_name='payer', verbose_name='پرداخت کننده')
     people = models.ManyToManyField(People, verbose_name='افراد')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
     class Meta:
