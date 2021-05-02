@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .mixins import FormValidMixin, FieldsMixin
+from .mixins import FormValidMixin, FieldsMixin, CategoryOwnerMixin
 from django.contrib.auth.views import LoginView
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, UpdateView
 from django.urls import reverse_lazy
 from django.conf import settings
 from .models import Category
@@ -20,5 +20,9 @@ class CategoryList(LoginRequiredMixin, ListView):
         return Category.objects.filter(owner=self.request.user)
 
 class CategoryCreate(LoginRequiredMixin, FormValidMixin, FieldsMixin, CreateView):
+    model = Category
+    template_name = 'panel/category-create-update.html'
+
+class CategoryUpdate(CategoryOwnerMixin, FormValidMixin, FieldsMixin, UpdateView):
     model = Category
     template_name = 'panel/category-create-update.html'

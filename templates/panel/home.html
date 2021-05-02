@@ -5,17 +5,27 @@
 
 {% block main %}
         <div class="row">
-          <div id="category-boxes" class="col-12">
             {% if object_list %}
               {% for cat in object_list %}
-              <div class="mr-3 col-3 small-box bg-success" style="width:auto; height:8rem;">
-                <div class="inner">
-                  <h1 style="font-size:18px;">{{ cat.title }}</h1>
+                <div class="col-lg-3 col-6">
+                  <!-- small box -->
+                  <div class="small-box bg-info">
+                    <div class="inner">
+                      <h4>{{ cat.title }}</h4><br>
+
+                      <p>New Orders</p>
+                      <div class="icon-update-delete">
+                        <a href="{% url 'panel:category-update' cat.pk %}" class="update-icon"><i class="far fa-edit"></i></a>
+                        <a href="#" class="delete-icon"><i class="far fa-trash-alt"></i></a>
+                      </div>
+                    </div>
+                    
+                    <div class="icon">
+                      <i class="fa fa-folder"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">اطلاعات بیشتر <i class="fas fa-arrow-circle-left"></i></a>
+                  </div>
                 </div>
-                <div class="icon">
-                  <i class="fas fa-sticky-note"></i>
-                </div>
-              </div>
               {% endfor %}
             {% else %}
               <h3>محتوایی برای نمایش وجود ندارد!</h3>

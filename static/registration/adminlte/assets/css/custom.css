@@ -100,3 +100,25 @@ body {
     display: flex;
     flex-wrap: wrap;
 }
+
+#btn_create_form {
+    margin-left: auto;
+    margin-right: 15px;
+}
+
+.icon-update-delete {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.icon-update-delete > a { 
+    margin-left: 5px;
+}
+
+.update-icon {
+    color: beige;
+}
+
+.delete-icon {
+    color: #ff3000;
+}
