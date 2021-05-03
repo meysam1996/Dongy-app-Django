@@ -34,7 +34,7 @@ class CategoryDelete(CategoryOwnerMixin, DeleteView):
     template_name = 'panel/category-confirm-delete.html'
 
 
-class CateogryList(LoginRequiredMixin, ListView):
+class TransactionList(LoginRequiredMixin, ListView):
     template_name = 'panel/transaction-list.html'
 
     def get_queryset(self):
