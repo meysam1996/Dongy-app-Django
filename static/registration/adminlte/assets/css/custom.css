@@ -109,11 +109,12 @@ body {
 .icon-update-delete {
     display: flex;
     justify-content: flex-end;
+    padding-top: 5px;
 }
 
 .icon-update-delete > a { 
     margin-left: 5px;
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 .update-icon {
@@ -121,5 +122,13 @@ body {
 }
 
 .delete-icon {
-    color: #ff3000;
+    color:  beige;
+}
+
+.delete-icon:hover, .update-icon:hover {
+    color: rgba(138, 37, 37, 0.548);
+}
+
+.main-header.navbar.navbar-expand.navbar-white.navbar-light {
+    justify-content: space-between !important;
 }

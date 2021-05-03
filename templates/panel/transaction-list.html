@@ -1,0 +1,46 @@
+{% extends 'panel/base.html' %}
+
+{% block title-meta %} | {{ category.title }}  {% endblock %}
+{% block title %} {{ category.title }} {% endblock %}
+
+{% block content-header %}
+    <div class="col col-lg-2">
+        <a href="#"><button class="btn btn-default button-action active">تراکنش ها</button></a>
+        <a href="#"><button class="btn btn-default button-people">افراد</button></a>    
+    </div>
+
+{% endblock %}
+
+{% block main %}
+        <div class="row">
+            {% if object_list %}
+              {% for transaction in object_list %}
+                <div class="col-lg-3 col-6">
+                  <!-- small box -->
+                  <div class="small-box bg-success">
+                    <div class="inner">
+                      <h4>{{ transaction.title }}</h4><br>
+
+                      <p>مبلغ : {{ transaction.amount }} تومان </p>
+                      <p>پرداخت کننده : {{ transaction.payer }}</p>
+                      <div class="icon-update-delete">
+                        <a href="#" class="update-icon"><i class="far fa-edit"></i></a>
+                        <a href="#" class="delete-icon"><i class="far fa-trash-alt"></i></a>
+                      </div>
+                    </div>
+                    
+                    <div class="icon">
+                      <i class="fas fa-file-invoice"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">اطلاعات بیشتر <i class="fas fa-arrow-circle-left"></i></a>
+                  </div>
+                </div>
+              {% endfor %}
+            {% else %}
+              <h3>محتوایی برای نمایش وجود ندارد!</h3>
+            {% endif %}
+            <!-- /.card -->
+        </div>
+        
+        
+{% endblock %}

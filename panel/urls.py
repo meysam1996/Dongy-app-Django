@@ -1,6 +1,6 @@
 from django.contrib.auth import views
 from django.urls import path
-from .views import CategoryList, CategoryCreate, CategoryUpdate, CategoryDelete
+from .views import CategoryListView, CategoryCreate, CategoryUpdate, CategoryDelete, CateogryList
 
 app_name= "panel"
 # urlpatterns = [
@@ -17,10 +17,11 @@ app_name= "panel"
 # ]
 
 urlpatterns = [
-    path('', CategoryList.as_view(), name='home'),
-    path('panel/', CategoryList.as_view(), name='home'),
+    path('', CategoryListView.as_view(), name='home'),
+    path('panel/', CategoryListView.as_view(), name='home'),
     path('panel/New-Categort/', CategoryCreate.as_view(), name='category-create'),
     path('panel/Categort/update/<int:pk>', CategoryUpdate.as_view(), name='category-update'),
     path('panel/Categort/delete/<int:pk>', CategoryDelete.as_view(), name='category-delete'),
+    path('panel/Categort/<slug:slug>/transactionlist/', CateogryList.as_view(), name='transaction-list'),
 
 ]

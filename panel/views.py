@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .mixins import FormValidMixin, FieldsMixin, CategoryOwnerMixin
@@ -6,14 +6,14 @@ from django.contrib.auth.views import LoginView
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.conf import settings
-from .models import Category
+from .models import Category, Transaction
 
 # Create your views here.
 # @login_required
 # def home(request):
 # 	return render(request, 'panel/home.html')
 
-class CategoryList(LoginRequiredMixin, ListView):
+class CategoryListView(LoginRequiredMixin, ListView):
     template_name = 'panel/home.html'
 
     def get_queryset(self):
@@ -32,3 +32,18 @@ class CategoryDelete(CategoryOwnerMixin, DeleteView):
     model = Category
     success_url = reverse_lazy('panel:home')
     template_name = 'panel/category-confirm-delete.html'
+
+
+class CateogryList(LoginRequiredMixin, ListView):
+    template_name = 'panel/transaction-list.html'
+
+    def get_queryset(self):
+        global category
+        slug = self.kwargs.get('slug')
+        category = get_object_or_404(Category, slug=slug)
+        return category.transactions.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category'] = category
+        return context

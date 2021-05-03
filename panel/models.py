@@ -2,6 +2,10 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 
+
+# Models managers
+
+
 # Create your models here.
 class Category(models.Model):
     title = models.CharField(max_length=200, verbose_name='عنوان دسته بندی')
@@ -36,7 +40,7 @@ class People(models.Model):
 class Transaction(models.Model):
     title = models.CharField(max_length=200, verbose_name='عنوان')
     slug = models.SlugField(max_length=100, unique=True, verbose_name='آدرس تراکنش')
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='دسته بندی')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='دسته بندی', related_name='transactions')
     amount = models.CharField(max_length=7, verbose_name='مبلغ به تومان')
     payer = models.ForeignKey(People, null=True, on_delete=models.SET_NULL, related_name='payer', verbose_name='پرداخت کننده')
     people = models.ManyToManyField(People, verbose_name='افراد')
@@ -54,4 +58,4 @@ class Transaction(models.Model):
         return ", ".join([people.fullname for people in self.people.all()])
     people_to_str.short_description = "افراد"
 
-
+    # objects = TransactionManager()
