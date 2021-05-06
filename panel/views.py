@@ -47,3 +47,15 @@ class TransactionList(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['category'] = category
         return context
+
+
+class TransactionCreateView(LoginRequiredMixin, FormValidMixin, CreateView):
+    model = Transaction
+    template_name = 'panel/transaction-create-update.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pk = self.kwargs.get('pk')
+        category = get_object_or_404(Category, pk=pk)
+        context['category'] = category
+        return context
