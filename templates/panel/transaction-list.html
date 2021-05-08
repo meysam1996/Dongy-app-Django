@@ -39,6 +39,20 @@
             {% else %}
               <h3>محتوایی برای نمایش وجود ندارد!</h3>
             {% endif %}
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-success">
+                  <div class="inner">
+                    <h4>ایجاد یک تراکنش جدید</h4><br>
+
+                  </div>
+                  
+                  <div class="icon">
+                    <i class="fas fa-file-invoice"></i>
+                  </div>
+                  <a href="{% url 'panel:transaction-create' pk=category.pk %}" class="small-box-footer"> ایجاد <i class="fas fa-cart-plus"></i></a>
+                </div>
+            </div>
             <!-- /.card -->
         </div>
         

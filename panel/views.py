@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .mixins import FormValidMixin, FieldsMixin, CategoryOwnerMixin
 from django.contrib.auth.views import LoginView
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.conf import settings
 from .models import Category, Transaction
 
@@ -39,8 +39,8 @@ class TransactionList(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         global category
-        slug = self.kwargs.get('slug')
-        category = get_object_or_404(Category, slug=slug)
+        pk = self.kwargs.get('pk')
+        category = get_object_or_404(Category, pk=pk)
         return category.transactions.all()
 
     def get_context_data(self, **kwargs):
@@ -49,13 +49,21 @@ class TransactionList(LoginRequiredMixin, ListView):
         return context
 
 
-class TransactionCreateView(LoginRequiredMixin, FormValidMixin, CreateView):
+class TransactionCreateView(LoginRequiredMixin, CreateView):
     model = Transaction
+    fields = ['title', 'slug', 'amount', 'payer', 'people']
     template_name = 'panel/transaction-create-update.html'
 
+    def get_success_url(self):
+        return reverse('panel:transaction-list', args=[category.id])
+
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        pk = self.kwargs.get('pk')
-        category = get_object_or_404(Category, pk=pk)
-        context['category'] = category
-        return context
+        global category
+        category = get_object_or_404(Category, id=self.kwargs['pk'])
+        kwargs['category'] = category
+        return super().get_context_data(**kwargs)
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        form.instance.category = category
+        return super().form_valid(form)

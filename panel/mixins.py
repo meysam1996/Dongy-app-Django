@@ -26,9 +26,3 @@ class CategoryOwnerMixin():
             return super().dispatch(request, *args, **kwargs)
         else:
             raise Http404("You can't access this page!")
-
-class transactionFormValidMixin():
-    def form_valid(self, form):
-        self.obj = form.save(commit=False)
-        self.obj.owner = self.request.user
-        return super().form_valid(form)
