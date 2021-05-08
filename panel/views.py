@@ -1,7 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .mixins import FormValidMixin, FieldsMixin, CategoryOwnerMixin
+from .mixins import (
+    FormValidMixin, CategoryFieldsMixin, CategoryOwnerMixin,
+    TransactionFieldsMixin, TransactionOwnerMixin 
+    )
 from django.contrib.auth.views import LoginView
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
@@ -19,11 +22,11 @@ class CategoryListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Category.objects.filter(owner=self.request.user)
 
-class CategoryCreate(LoginRequiredMixin, FormValidMixin, FieldsMixin, CreateView):
+class CategoryCreate(LoginRequiredMixin, FormValidMixin, CategoryFieldsMixin, CreateView):
     model = Category
     template_name = 'panel/category-create-update.html'
 
-class CategoryUpdate(CategoryOwnerMixin, FormValidMixin, FieldsMixin, UpdateView):
+class CategoryUpdate(CategoryOwnerMixin, FormValidMixin, CategoryFieldsMixin, UpdateView):
     model = Category
     template_name = 'panel/category-create-update.html'
 
@@ -66,4 +69,16 @@ class TransactionCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.owner = self.request.user
         form.instance.category = category
+        return super().form_valid(form)
+
+
+class TransactionUpdateView(LoginRequiredMixin, TransactionFieldsMixin, UpdateView):
+    model = Transaction
+    template_name = 'panel/transaction-create-update.html'
+
+    def get_success_url(self):
+        return reverse('panel:transaction-list', args=self.kwargs['c_pk'])
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
         return super().form_valid(form)

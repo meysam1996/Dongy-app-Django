@@ -2,7 +2,7 @@ from django.contrib.auth import views
 from django.urls import path
 from .views import (
     CategoryListView, CategoryCreate, CategoryUpdate, CategoryDelete,
-    TransactionList, TransactionCreateView
+    TransactionList, TransactionCreateView, TransactionUpdateView
     )
 
 app_name= "panel"
@@ -26,6 +26,7 @@ urlpatterns = [
     path('panel/Categort/update/<int:pk>', CategoryUpdate.as_view(), name='category-update'),
     path('panel/Categort/delete/<int:pk>', CategoryDelete.as_view(), name='category-delete'),
     path('panel/Categort/<int:pk>/transactionlist/', TransactionList.as_view(), name='transaction-list'),
-    path('panel/Categort/<int:pk>/create-transaction/', TransactionCreateView.as_view(), name='transaction-create')
+    path('panel/Categort/<int:pk>/create-transaction/', TransactionCreateView.as_view(), name='transaction-create'),
+    path('panel/Categort/<int:c_pk>/update-transaction/<int:tr_pk>', TransactionUpdateView.as_view(), name='transaction-update')
 
 ]
