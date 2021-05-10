@@ -72,7 +72,7 @@ class TransactionCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class TransactionUpdateView(LoginRequiredMixin, UpdateView):
+class TransactionUpdateView(TransactionOwnerMixin, UpdateView):
     model = Transaction
     fields = ['title', 'slug', 'amount', 'payer', 'people']
     template_name = 'panel/transaction-create-update.html'
@@ -112,3 +112,19 @@ class TransactionDeleteView(TransactionOwnerMixin, DeleteView):
         category = get_object_or_404(Category, id=self.kwargs['c_pk'])
         kwargs['category'] = category
         return super().get_context_data(**kwargs)
+
+
+class PeopleListView(LoginRequiredMixin, ListView):
+    template_name = 'panel/people-list.html'
+
+    def get_queryset(self):
+        global category
+        pk = self.kwargs.get('pk')
+        category = get_object_or_404(Category, pk=pk)
+        return category.people.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category'] = category
+        return context
+    

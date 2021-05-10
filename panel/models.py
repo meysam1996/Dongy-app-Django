@@ -26,7 +26,7 @@ class Category(models.Model):
 class People(models.Model):
     fullname = models.CharField(max_length=70, verbose_name='نام')
     username = models.CharField(max_length=100, unique=True, default=None, null=True, blank=True, verbose_name='نام کاربری')
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='دسته بندی', related_name='people')
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     
     class Meta:
