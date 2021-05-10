@@ -72,13 +72,25 @@ class TransactionCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class TransactionUpdateView(LoginRequiredMixin, TransactionFieldsMixin, UpdateView):
+class TransactionUpdateView(LoginRequiredMixin, UpdateView):
     model = Transaction
+    fields = ['title', 'slug', 'amount', 'payer', 'people']
     template_name = 'panel/transaction-create-update.html'
 
     def get_success_url(self):
-        return reverse('panel:transaction-list', args=self.kwargs['c_pk'])
+        return reverse('panel:transaction-list', args=[category.id])
+
+    def get_object(self):
+        transaction = get_object_or_404(Transaction, id=self.kwargs['tr_pk'])
+        return transaction
+    
+    def get_context_data(self, **kwargs):
+        global category
+        category = get_object_or_404(Category, id=self.kwargs['c_pk'])
+        kwargs['category'] = category
+        return super().get_context_data(**kwargs)
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
+        form.instance.category = category
         return super().form_valid(form)
