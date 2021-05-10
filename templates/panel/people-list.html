@@ -6,7 +6,7 @@
 {% block content-header %}
     <div class="col col-lg-2">
         <a href="{% url 'panel:transaction-list' category.pk %}"><button class="btn btn-default button-action active">تراکنش ها</button></a>
-        <a href="#"><button class="btn btn-default button-people">افراد</button></a>    
+        <a href="{% url 'panel:people-list' category.pk %}"><button class="btn btn-default button-people">افراد</button></a>    
     </div>
 
 {% endblock %}
@@ -29,27 +29,25 @@
                     </div>
                     
                     <div class="icon">
-                      <i class="fas fa-file-invoice"></i>
+                      <i class="fas fa-id-card"></i>
                     </div>
                     <a href="#" class="small-box-footer">اطلاعات بیشتر <i class="fas fa-arrow-circle-left"></i></a>
                   </div>
                 </div>
               {% endfor %}
-            {% else %}
-              <h3>محتوایی برای نمایش وجود ندارد!</h3>
             {% endif %}
             <div class="col-lg-3 col-6">
                 <!-- small box -->
                 <div class="small-box bg-success">
                   <div class="inner">
-                    <h4>ایجاد یک تراکنش جدید</h4><br>
+                    <h4>افزودن یک فرد جدید</h4><br>
 
                   </div>
                   
                   <div class="icon">
-                    <i class="fas fa-file-invoice"></i>
+                    <i class="fas fa-user-plus"></i>
                   </div>
-                  <a href="#" class="small-box-footer"> ایجاد <i class="fas fa-cart-plus"></i></a>
+                  <a href="{% url 'panel:people-create' category.pk %}" class="small-box-footer"> افزودن <i class="fas fa-user-plus"></i></a>
                 </div>
             </div>
             <!-- /.card -->

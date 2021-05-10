@@ -1,6 +1,6 @@
 from django.http import Http404
 from django.shortcuts import get_object_or_404
-from .models import Category, Transaction
+from .models import Category, Transaction, People
 
 class CategoryFieldsMixin():
     def dispatch(self, request, *args, **kwargs):
@@ -44,6 +44,15 @@ class TransactionOwnerMixin():
     def dispatch(self, request, tr_pk, *args, **kwargs):
         transaction = get_object_or_404(Transaction, pk=tr_pk)
         if  transaction.owner == request.user or request.user.is_superuser:
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            raise Http404("You can't access this page!")
+
+
+class PeopleOwnerMixin():
+    def dispatch(self, request, tr_pk, *args, **kwargs):
+        people = get_object_or_404(People, pk=tr_pk)
+        if  people.owner == request.user or request.user.is_superuser:
             return super().dispatch(request, *args, **kwargs)
         else:
             raise Http404("You can't access this page!")

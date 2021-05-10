@@ -9,7 +9,7 @@ from django.contrib.auth.views import LoginView
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
 from django.conf import settings
-from .models import Category, Transaction
+from .models import Category, Transaction, People
 
 # Create your views here.
 # @login_required
@@ -127,4 +127,23 @@ class PeopleListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['category'] = category
         return context
-    
+
+
+class PeopleCreateView(LoginRequiredMixin, CreateView):
+    model = People
+    fields = ['fullname', 'username']
+    template_name = 'panel/people-create-update.html'
+
+    def get_success_url(self):
+        return reverse('panel:people-list', args=[category.id])
+
+    def get_context_data(self, **kwargs):
+        global category
+        category = get_object_or_404(Category, id=self.kwargs['pk'])
+        kwargs['category'] = category
+        return super().get_context_data(**kwargs)
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        form.instance.category = category
+        return super().form_valid(form)
