@@ -94,3 +94,21 @@ class TransactionUpdateView(LoginRequiredMixin, UpdateView):
         form.instance.owner = self.request.user
         form.instance.category = category
         return super().form_valid(form)
+
+
+class TransactionDeleteView(TransactionOwnerMixin, DeleteView):
+    model = Transaction
+    template_name = 'panel/transaction-confirm-delete.html'
+
+    def get_success_url(self):
+        return reverse('panel:transaction-list', args=[category.id])
+
+    def get_object(self):
+        transaction = get_object_or_404(Transaction, id=self.kwargs['tr_pk'])
+        return transaction
+    
+    def get_context_data(self, **kwargs):
+        global category
+        category = get_object_or_404(Category, id=self.kwargs['c_pk'])
+        kwargs['category'] = category
+        return super().get_context_data(**kwargs)

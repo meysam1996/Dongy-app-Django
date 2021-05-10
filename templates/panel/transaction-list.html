@@ -5,7 +5,7 @@
 
 {% block content-header %}
     <div class="col col-lg-2">
-        <a href="#"><button class="btn btn-default button-action active">تراکنش ها</button></a>
+        <a href="{% url 'panel:transaction-list' category.pk %}"><button class="btn btn-default button-action active">تراکنش ها</button></a>
         <a href="#"><button class="btn btn-default button-people">افراد</button></a>    
     </div>
 
@@ -25,7 +25,7 @@
                       <p>پرداخت کننده : {{ transaction.payer }}</p>
                       <div class="icon-update-delete">
                         <a href="{% url 'panel:transaction-update' c_pk=category.pk tr_pk=transaction.pk %}" class="update-icon"><i class="far fa-edit"></i></a>
-                        <a href="#" class="delete-icon"><i class="far fa-trash-alt"></i></a>
+                        <a href="{% url 'panel:transaction-delete' c_pk=category.pk tr_pk=transaction.pk %}" class="delete-icon"><i class="far fa-trash-alt"></i></a>
                       </div>
                     </div>
                     
