@@ -172,3 +172,21 @@ class PeopleUpdateView(PeopleOwnerMixin, UpdateView):
         form.instance.owner = self.request.user
         form.instance.category = category
         return super().form_valid(form)
+
+
+class PeopleDeleteView(PeopleOwnerMixin, DeleteView):
+    model = People
+    template_name = 'panel/people-confirm-delete.html'
+
+    def get_success_url(self):
+        return reverse('panel:people-list', args=[category.id])
+
+    def get_object(self):
+        people = get_object_or_404(People, id=self.kwargs['p_pk'])
+        return people
+    
+    def get_context_data(self, **kwargs):
+        global category
+        category = get_object_or_404(Category, id=self.kwargs['c_pk'])
+        kwargs['category'] = category
+        return super().get_context_data(**kwargs)

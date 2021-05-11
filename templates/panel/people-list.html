@@ -24,7 +24,7 @@
                       
                       <div class="icon-update-delete">
                         <a href="{% url 'panel:people-update' c_pk=category.pk p_pk=person.pk %}" class="update-icon"><i class="far fa-edit"></i></a>
-                        <a href="#" class="delete-icon"><i class="far fa-trash-alt"></i></a>
+                        <a href="{% url 'panel:people-delete' c_pk=category.pk p_pk=person.pk %}" class="delete-icon"><i class="far fa-trash-alt"></i></a>
                       </div>
                     </div>
                     

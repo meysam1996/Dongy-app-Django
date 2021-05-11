@@ -1,0 +1,24 @@
+{% extends 'panel/base.html' %}
+
+{% block title-meta %} | حذف فرد{% endblock %}
+{% block title %} حذف فرد {% endblock %}
+
+{% block main %}
+<div class="col-md-6 text-center mx-auto">
+    <!-- general form elements -->
+        <div class="card card-danger">
+            <div class="card-header">
+                <h3 class="card-title mb-0 float-left">حذف فرد</h3>
+            </div>
+            <div class="card-body">
+                <form method="post">{% csrf_token %}
+                    <p>آیا می خواهید این فرد با نام "
+                    {{ people.fullname }}
+                    " در دسته بندی "{{ category.title }}" را حذف کنید ؟</p>
+                    <input type="submit" class="btn btn-outline-danger" value="تائید">
+                    <input type="submit" class="btn btn-secondary" value="بازگشت" onclick="window.location.href='{% url 'panel:people-list' category.pk %}';return false;">
+                </form>
+            </div>
+        
+</div>
+{% endblock %}
