@@ -50,8 +50,8 @@ class TransactionOwnerMixin():
 
 
 class PeopleOwnerMixin():
-    def dispatch(self, request, tr_pk, *args, **kwargs):
-        people = get_object_or_404(People, pk=tr_pk)
+    def dispatch(self, request, p_pk, *args, **kwargs):
+        people = get_object_or_404(People, pk=p_pk)
         if  people.owner == request.user or request.user.is_superuser:
             return super().dispatch(request, *args, **kwargs)
         else:

@@ -3,7 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .mixins import (
     FormValidMixin, CategoryFieldsMixin, CategoryOwnerMixin,
-    TransactionFieldsMixin, TransactionOwnerMixin 
+    TransactionFieldsMixin, TransactionOwnerMixin,
+    PeopleOwnerMixin 
     )
 from django.contrib.auth.views import LoginView
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
@@ -140,6 +141,30 @@ class PeopleCreateView(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         global category
         category = get_object_or_404(Category, id=self.kwargs['pk'])
+        kwargs['category'] = category
+        return super().get_context_data(**kwargs)
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        form.instance.category = category
+        return super().form_valid(form)
+
+
+class PeopleUpdateView(PeopleOwnerMixin, UpdateView):
+    model = People
+    fields = ['fullname', 'username']
+    template_name = 'panel/people-create-update.html'
+
+    def get_success_url(self):
+        return reverse('panel:people-list', args=[category.id])
+
+    def get_object(self):
+        people = get_object_or_404(People, id=self.kwargs['p_pk'])
+        return people
+    
+    def get_context_data(self, **kwargs):
+        global category
+        category = get_object_or_404(Category, id=self.kwargs['c_pk'])
         kwargs['category'] = category
         return super().get_context_data(**kwargs)
 

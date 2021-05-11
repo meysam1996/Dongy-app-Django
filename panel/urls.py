@@ -3,7 +3,7 @@ from django.urls import path
 from .views import (
     CategoryListView, CategoryCreate, CategoryUpdate, CategoryDelete,
     TransactionList, TransactionCreateView, TransactionUpdateView, TransactionDeleteView,
-    PeopleListView, PeopleCreateView
+    PeopleListView, PeopleCreateView, PeopleUpdateView
     )
 
 app_name= "panel"
@@ -32,5 +32,6 @@ urlpatterns = [
     path('panel/Categort/<int:c_pk>/delete-transaction/<int:tr_pk>', TransactionDeleteView.as_view(), name='transaction-delete'),
     path('panel/Categort/<int:pk>/People-list/', PeopleListView.as_view(), name='people-list'),
     path('panel/Categort/<int:pk>/create-people/', PeopleCreateView.as_view(), name='people-create'),
+    path('panel/Categort/<int:c_pk>/update-people/<int:p_pk>', PeopleUpdateView.as_view(), name='people-update'),
 
 ]
