@@ -23,6 +23,7 @@
 
                       <p>مبلغ : {{ transaction.amount }} تومان </p>
                       <p>پرداخت کننده : {{ transaction.payer }}</p>
+                      <p>افراد : {% for person in transaction.people.all %}{{ person }}, {% endfor %}</p>
                       <div class="icon-update-delete">
                         <a href="{% url 'panel:transaction-update' c_pk=category.pk tr_pk=transaction.pk %}" class="update-icon"><i class="far fa-edit"></i></a>
                         <a href="{% url 'panel:transaction-delete' c_pk=category.pk tr_pk=transaction.pk %}" class="delete-icon"><i class="far fa-trash-alt"></i></a>
