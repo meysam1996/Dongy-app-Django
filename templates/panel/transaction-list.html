@@ -22,7 +22,7 @@
                       <h4>{{ transaction.title }}</h4><br>
 
                       <p>مبلغ : {{ transaction.amount }} تومان </p>
-                      <p>پرداخت کننده : {{ transaction.payer }}</p>
+                      <p>پرداخت کننده : {{ transaction.payer.get_full_name }}</p>
                       <p>افراد : {% for person in transaction.people.all %}{{ person }}, {% endfor %}</p>
                       <div class="icon-update-delete">
                         <a href="{% url 'panel:transaction-update' c_pk=category.pk tr_pk=transaction.pk %}" class="update-icon"><i class="far fa-edit"></i></a>
@@ -42,7 +42,7 @@
                 <!-- small box -->
                 <div class="small-box bg-success">
                   <div class="inner">
-                    <h4>ایجاد یک تراکنش جدید</h4><br>
+                    <h5>ایجاد یک تراکنش جدید</h5><br>
 
                   </div>
                   

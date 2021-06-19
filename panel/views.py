@@ -11,6 +11,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
 from django.conf import settings
 from .models import Category, Transaction, People
+from .forms import TransactonForm, PeopleForm
 
 # Create your views here.
 # @login_required
@@ -55,7 +56,7 @@ class TransactionList(LoginRequiredMixin, ListView):
 
 class TransactionCreateView(LoginRequiredMixin, CreateView):
     model = Transaction
-    fields = ['title', 'slug', 'amount', 'payer', 'people']
+    form_class = TransactonForm
     template_name = 'panel/transaction-create-update.html'
 
     def get_success_url(self):
@@ -69,13 +70,14 @@ class TransactionCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
+        form.instance.payer = self.request.user
         form.instance.category = category
         return super().form_valid(form)
 
 
 class TransactionUpdateView(TransactionOwnerMixin, UpdateView):
     model = Transaction
-    fields = ['title', 'slug', 'amount', 'payer', 'people']
+    form_class = TransactonForm
     template_name = 'panel/transaction-create-update.html'
 
     def get_success_url(self):
@@ -93,6 +95,7 @@ class TransactionUpdateView(TransactionOwnerMixin, UpdateView):
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
+        form.instance.payer = self.request.user
         form.instance.category = category
         return super().form_valid(form)
 
@@ -132,7 +135,7 @@ class PeopleListView(LoginRequiredMixin, ListView):
 
 class PeopleCreateView(LoginRequiredMixin, CreateView):
     model = People
-    fields = ['fullname', 'username']
+    form_class = PeopleForm
     template_name = 'panel/people-create-update.html'
 
     def get_success_url(self):
@@ -152,7 +155,7 @@ class PeopleCreateView(LoginRequiredMixin, CreateView):
 
 class PeopleUpdateView(PeopleOwnerMixin, UpdateView):
     model = People
-    fields = ['fullname', 'username']
+    form_class = PeopleForm
     template_name = 'panel/people-create-update.html'
 
     def get_success_url(self):

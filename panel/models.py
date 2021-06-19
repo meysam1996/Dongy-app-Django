@@ -41,8 +41,8 @@ class Transaction(models.Model):
     title = models.CharField(max_length=200, verbose_name='عنوان')
     slug = models.SlugField(max_length=100, unique=True, verbose_name='آدرس تراکنش')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='دسته بندی', related_name='transactions')
-    amount = models.CharField(max_length=7, verbose_name='مبلغ به تومان')
-    payer = models.ForeignKey(People, null=True, on_delete=models.SET_NULL, related_name='payer', verbose_name='پرداخت کننده')
+    amount = models.PositiveIntegerField(verbose_name='مبلغ به تومان')
+    payer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='payer', verbose_name='پرداخت کننده')
     people = models.ManyToManyField(People, verbose_name='افراد')
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
